@@ -9,3 +9,4 @@ edition = "2018"
 [dependencies]
 piston_window = "0.131.0"
 once_cell = "1.19.0"
+rand = "0.8.5"

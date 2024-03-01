@@ -2,6 +2,7 @@ pub mod piston;
 pub mod data;
 pub mod update;
 pub mod draw;
+mod simulator;
 
 use piston_window::*;
 use piston::{KeysState, create_window};
@@ -14,7 +15,7 @@ fn main() {
     let mut key_state = KeysState::new();
     let mut window: PistonWindow = create_window();
 
-    let mut data = create_data(24, 20);
+    let mut data = create_data(24, 20, 0.7);
     let images = load_image(&mut window);
     while let Some(e) = window.next() {
         match e {
