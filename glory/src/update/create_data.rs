@@ -20,7 +20,7 @@ fn create_planet(x: usize, y: usize) -> Planet {
     for i in 0..y {
         let mut line = Vec::<Tile>::new();
         for j in 0..x {
-            line.push(create_tile(i, j));
+            line.push(create_tile(j, i));
         }
         tiles.push(line);
     }
