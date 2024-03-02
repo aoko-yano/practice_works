@@ -10,7 +10,7 @@ use crate::data::planet::tile::society::{Population, Society};
 use crate::data::planet::tile::society::culture::Cultures;
 use crate::data::planet::tile::society::technology::Technologies;
 use crate::data::planet::tile::Tile;
-use crate::simulator::generate_initial_area_types;
+use crate::calc::simulator::generate_initial_area_types;
 
 pub fn create_data(x: usize, y: usize, sea_ratio: f64) -> Data {
     Data { status: Status::Start, history: vec!{ create_planet(x, y, sea_ratio) } }
