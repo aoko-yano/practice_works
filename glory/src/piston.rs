@@ -6,8 +6,8 @@ use piston_window::*;
 const WINDOW_TITLE: &str = "For the Glory of X-kind";
 
 const WINDOW_SIZE: Size = Size {
-    width: 960.0,
-    height: 720.0,
+    width: 1280.0,
+    height: 960.0,
 };
 
 pub struct KeysState {

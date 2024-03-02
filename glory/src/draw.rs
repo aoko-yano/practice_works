@@ -51,7 +51,6 @@ pub fn load_image(window: &mut PistonWindow) -> HashMap<AreaType, Image> {
 }
 
 pub fn draw(images: &HashMap<AreaType, Image>, data: &Data, c: Context, g: &mut G2d) {
-    // TODO: implementation.
     let planet = data.history.last().unwrap();
     for (y, line) in planet.tiles.iter().enumerate() {
         for (x, tile) in line.iter().enumerate() {
@@ -65,8 +64,8 @@ fn draw_tile(images: &HashMap<AreaType, Image>, x: usize, y: usize, tile: &Tile,
     let transform = c
         .transform
         .trans(
-            80.0 + x as f64 * tile_image.size.width + (tile_image.size.width / 2.0) * (if y % 2 == 0 {0.0} else {1.0}),
-            40.0 + y as f64 * (tile_image.size.height - 14.0),
+            30.0 + x as f64 * tile_image.size.width + (tile_image.size.width / 2.0) * (if y % 2 == 0 {0.0} else {1.0}),
+            15.0 + y as f64 * (tile_image.size.height - 14.0),
         );
     image(&tile_image.texture, transform, g);
 }

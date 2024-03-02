@@ -15,7 +15,7 @@ fn main() {
     let mut key_state = KeysState::new();
     let mut window: PistonWindow = create_window();
 
-    let mut data = create_data(24, 21, 0.7);
+    let mut data = create_data(38, 27, 0.7);
     let images = load_image(&mut window);
     while let Some(e) = window.next() {
         match e {
