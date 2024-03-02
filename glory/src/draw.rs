@@ -61,11 +61,14 @@ pub fn draw(images: &HashMap<AreaType, Image>, data: &Data, c: Context, g: &mut 
 
 fn draw_tile(images: &HashMap<AreaType, Image>, x: usize, y: usize, tile: &Tile, c: Context, g: &mut G2d) {
     let tile_image = images.get(&tile.environment.nature.area_type).unwrap();
+    let image_width = tile_image.size.width * tile_image.scale;
+    let image_height = tile_image.size.height * tile_image.scale;
     let transform = c
         .transform
         .trans(
-            30.0 + x as f64 * tile_image.size.width + (tile_image.size.width / 2.0) * (if y % 2 == 0 {0.0} else {1.0}),
-            15.0 + y as f64 * (tile_image.size.height - 14.0),
-        );
+            30.0 + x as f64 * image_width + (image_width / 2.0) * (if y % 2 == 0 {0.0} else {1.0}),
+            15.0 + y as f64 * (image_height - 14.0),
+        )
+        .scale(tile_image.scale, tile_image.scale);
     image(&tile_image.texture, transform, g);
 }

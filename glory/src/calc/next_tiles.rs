@@ -61,14 +61,14 @@ fn calc_up_left_position(x: usize, _y: usize, pos: Position) -> Option<Position>
     })
 }
 
-fn calc_right_position(x: usize, y: usize, pos: Position) -> Position {
+fn calc_right_position(x: usize, _y: usize, pos: Position) -> Position {
     Position {
         x: get_x_plus_1(x as i32, pos.x),
         y: pos.y
     }
 }
 
-fn calc_left_position(x: usize, y: usize, pos: Position) -> Position {
+fn calc_left_position(x: usize, _y: usize, pos: Position) -> Position {
     Position {
         x: get_x_minus_1(x as i32, pos.x),
         y: pos.y

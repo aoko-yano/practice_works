@@ -12,7 +12,7 @@ pub fn generate_initial_area_types(x: usize, y: usize, sea_ratio: f64) -> Vec<Ve
         }
         area_types.push(line);
     }
-    self_organize(sea_ratio, &mut area_types);
+    self_organize(&mut area_types);
     area_types
 }
 
@@ -25,7 +25,7 @@ fn select_sea_or_desert(sea_ratio: f64) -> AreaType {
     AreaType::Desert
 }
 
-fn self_organize(sea_ratio: f64, area_types: &mut Vec<Vec<AreaType>>) {
+fn self_organize(area_types: &mut Vec<Vec<AreaType>>) {
     for _i in 0..100 {
         let mut temp_area_types = update_area_types_for_self_organize(&area_types);
         std::mem::swap(&mut temp_area_types, area_types);
