@@ -1,4 +1,4 @@
-use piston_window::Position;
+use crate::data::Position;
 use crate::data::planet::tile::environment::natural_resource::NaturalResources;
 use crate::data::planet::tile::Tile;
 

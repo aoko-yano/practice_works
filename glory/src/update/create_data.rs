@@ -1,6 +1,5 @@
 use std::collections::HashMap;
-use piston_window::Position;
-use crate::data::{Data, Status};
+use crate::data::{Data, Status, Position};
 use crate::data::planet::Planet;
 use crate::data::planet::tile::environment::biological_resource::BiologicalResource;
 use crate::data::planet::tile::environment::Environment;

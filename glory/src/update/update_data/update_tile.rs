@@ -4,7 +4,7 @@ pub mod update_biological_resource;
 pub mod update_natural_resource;
 pub mod update_nature;
 
-use piston_window::Position;
+use crate::data::Position;
 use crate::data::planet::tile::environment::Environment;
 use crate::data::planet::tile::society::Society;
 use crate::data::planet::tile::Tile;

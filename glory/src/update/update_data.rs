@@ -1,5 +1,4 @@
-use piston_window::Position;
-use crate::data::{Data, Status};
+use crate::data::{Data, Status, Position};
 use crate::data::planet::Planet;
 use crate::piston::KeysState;
 

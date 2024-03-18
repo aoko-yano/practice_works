@@ -1,4 +1,4 @@
-use piston_window::Position;
+use crate::data::Position;
 
 #[derive(Debug)]
 pub struct NextTilePositions {
@@ -10,7 +10,7 @@ pub struct NextTilePositions {
     pub down_left: Option<Position>,
 }
 
-pub fn get_next_tile_positions(x: usize, y: usize, pos: Position) -> NextTilePositions {
+pub fn get_next_tile_positions(x: usize, y: usize, pos: &Position) -> NextTilePositions {
     NextTilePositions{
         up_right: calc_up_right_position(x, y, pos),
         up_left: calc_up_left_position(x, y, pos),
@@ -29,7 +29,7 @@ fn get_x_minus_1(x: i32, pos_x: i32) -> i32 {
     if pos_x == 0i32 { x - 1 } else { pos_x - 1 }
 }
 
-fn calc_up_right_position(x: usize, _y: usize, pos: Position) -> Option<Position> {
+fn calc_up_right_position(x: usize, _y: usize, pos: &Position) -> Option<Position> {
     if pos.y == 0 {
         return None
     }
@@ -45,7 +45,7 @@ fn calc_up_right_position(x: usize, _y: usize, pos: Position) -> Option<Position
     })
 }
 
-fn calc_up_left_position(x: usize, _y: usize, pos: Position) -> Option<Position> {
+fn calc_up_left_position(x: usize, _y: usize, pos: &Position) -> Option<Position> {
     if pos.y == 0 {
         return None
     }
@@ -61,21 +61,21 @@ fn calc_up_left_position(x: usize, _y: usize, pos: Position) -> Option<Position>
     })
 }
 
-fn calc_right_position(x: usize, _y: usize, pos: Position) -> Position {
+fn calc_right_position(x: usize, _y: usize, pos: &Position) -> Position {
     Position {
         x: get_x_plus_1(x as i32, pos.x),
         y: pos.y
     }
 }
 
-fn calc_left_position(x: usize, _y: usize, pos: Position) -> Position {
+fn calc_left_position(x: usize, _y: usize, pos: &Position) -> Position {
     Position {
         x: get_x_minus_1(x as i32, pos.x),
         y: pos.y
     }
 }
 
-fn calc_down_right_position(x: usize, y: usize, pos: Position) -> Option<Position> {
+fn calc_down_right_position(x: usize, y: usize, pos: &Position) -> Option<Position> {
     if pos.y == (y as i32 - 1) {
         return None
     }
@@ -91,7 +91,7 @@ fn calc_down_right_position(x: usize, y: usize, pos: Position) -> Option<Positio
     })
 }
 
-fn calc_down_left_position(x: usize, y: usize, pos: Position) -> Option<Position> {
+fn calc_down_left_position(x: usize, y: usize, pos: &Position) -> Option<Position> {
     if pos.y == (y as i32 - 1) {
         return None
     }

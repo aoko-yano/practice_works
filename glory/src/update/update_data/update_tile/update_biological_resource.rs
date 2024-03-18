@@ -1,4 +1,4 @@
-use piston_window::Position;
+use crate::data::Position;
 use crate::data::planet::tile::environment::biological_resource::BiologicalResource;
 use crate::data::planet::tile::Tile;
 

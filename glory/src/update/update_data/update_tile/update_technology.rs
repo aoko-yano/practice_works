@@ -1,4 +1,4 @@
-use piston_window::Position;
+use crate::data::Position;
 use crate::data::planet::tile::society::technology::{MAX_TECH_LEVEL, Technologies, Technology};
 use crate::data::planet::tile::Tile;
 

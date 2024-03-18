@@ -1,7 +1,7 @@
 pub mod society;
 pub mod environment;
 
-use piston_window::Position;
+use crate::data::Position;
 use society::technology::Technology;
 
 #[derive(Clone, Debug)]
