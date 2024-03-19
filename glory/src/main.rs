@@ -46,7 +46,7 @@ fn main() {
                 });
             },
             Event::Loop(Loop::Update(_)) => {
-                update_data(&mut data, &mut mouse_button_state);
+                update_data(&mut data, &mut mouse_button_state, &images);
             },
             _ => {}
         }

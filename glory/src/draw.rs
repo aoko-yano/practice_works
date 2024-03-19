@@ -4,11 +4,12 @@ use piston_window::types::Color;
 use crate::data::{Data, Position};
 use crate::data::planet::tile::environment::nature::AreaType;
 use crate::data::planet::tile::Tile;
+use crate::calc::tile_position::get_tile_position;
 
 pub struct Image {
     texture: G2dTexture,
-    size: Size,
-    scale: f64,
+    pub size: Size,
+    pub scale: f64,
 }
 
 fn load_tile_image(window: &mut PistonWindow, path: &str) -> Image {
@@ -85,11 +86,12 @@ fn draw_tile(
     let tile_image = images.get(&tile.environment.nature.area_type).unwrap();
     let image_width = tile_image.size.width * tile_image.scale;
     let image_height = tile_image.size.height * tile_image.scale;
+    let tile_position = get_tile_position(x, y, image_width, image_height);
     let transform = c
         .transform
         .trans(
-            30.0 + x as f64 * image_width + (image_width / 2.0) * (if y % 2 == 0 {0.0} else {1.0}),
-            15.0 + y as f64 * (image_height - 14.0),
+            tile_position.0,
+            tile_position.1,
         )
         .scale(tile_image.scale, tile_image.scale);
     image(&tile_image.texture, transform, g);

@@ -1,20 +1,25 @@
+use std::collections::HashMap;
 use crate::data::{Data, Status, Position};
 use crate::data::planet::Planet;
 use crate::data::MouseButtonState;
 
 use put_people_to_data::put_people_to_data;
 use update_tile::update_tile;
+use crate::data::planet::tile::environment::nature::AreaType;
+use crate::draw::Image;
+use crate::update::mouse_click_event::mouse_click_event;
 
 pub mod put_people_to_data;
 pub mod update_tile;
 
 pub fn update_data(
     data: &mut Data,
-    mouse_button_state: &mut MouseButtonState) {
+    mouse_button_state: &mut MouseButtonState,
+    images: &HashMap<AreaType, Image>) {
     match mouse_button_state.pressed {
         Some(_m) => {
             if mouse_button_state.pressed == mouse_button_state.released {
-                data.text = format!("kick mouse click event for: {:?}", mouse_button_state);
+                mouse_click_event(data, mouse_button_state, images);
                 *mouse_button_state = MouseButtonState {
                     cursor: mouse_button_state.cursor.clone(),
                     pressed: None,
