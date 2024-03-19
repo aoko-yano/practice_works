@@ -12,7 +12,11 @@ use crate::data::planet::tile::Tile;
 use crate::calc::simulator::generate_initial_area_types;
 
 pub fn create_data(x: usize, y: usize, sea_ratio: f64) -> Data {
-    Data { status: Status::Start, history: vec!{ create_planet(x, y, sea_ratio) } }
+    Data {
+        status: Status::Start,
+        history: vec!{ create_planet(x, y, sea_ratio) },
+        text: String::new(),
+    }
 }
 
 fn create_planet(x: usize, y: usize, sea_ratio: f64) -> Planet {

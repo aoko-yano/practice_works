@@ -72,10 +72,16 @@ pub fn draw(
             draw_tile(images, x, y, tile, c, g);
         }
     }
-    draw_text(glyphs, c, g, d);
+    draw_text(&data.text, glyphs, c, g, d);
 }
 
-fn draw_tile(images: &HashMap<AreaType, Image>, x: usize, y: usize, tile: &Tile, c: Context, g: &mut G2d) {
+fn draw_tile(
+    images: &HashMap<AreaType, Image>,
+    x: usize,
+    y: usize,
+    tile: &Tile,
+    c: Context,
+    g: &mut G2d) {
     let tile_image = images.get(&tile.environment.nature.area_type).unwrap();
     let image_width = tile_image.size.width * tile_image.scale;
     let image_height = tile_image.size.height * tile_image.scale;
@@ -90,6 +96,7 @@ fn draw_tile(images: &HashMap<AreaType, Image>, x: usize, y: usize, tile: &Tile,
 }
 
 fn draw_text(
+    text: &String,
     glyphs: &mut Glyphs,
     c: Context,
     g: &mut G2d,
@@ -98,7 +105,7 @@ fn draw_text(
     let pos = Position {x: 20, y: 540};
     Text::new_color(text_color, 20)
         .draw(
-            "hello world",
+            text,
             glyphs,
             &c.draw_state,
             c.transform.trans(pos.x as f64, pos.y as f64),

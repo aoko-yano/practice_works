@@ -1,6 +1,6 @@
 use crate::data::{Data, Status, Position};
 use crate::data::planet::Planet;
-use crate::piston::KeysState;
+use crate::data::MouseButtonState;
 
 use put_people_to_data::put_people_to_data;
 use update_tile::update_tile;
@@ -8,7 +8,21 @@ use update_tile::update_tile;
 pub mod put_people_to_data;
 pub mod update_tile;
 
-pub fn update_data(data: &mut Data, _key: &KeysState) {
+pub fn update_data(
+    data: &mut Data,
+    mouse_button_state: &mut MouseButtonState) {
+    match mouse_button_state.pressed {
+        Some(_m) => {
+            if mouse_button_state.pressed == mouse_button_state.released {
+                data.text = format!("kick mouse click event for: {:?}", mouse_button_state);
+                *mouse_button_state = MouseButtonState {
+                    cursor: mouse_button_state.cursor.clone(),
+                    pressed: None,
+                    released: None};
+            }
+        },
+        _ => {}
+    }
     update_history(data);
     update_status(data);
 }
