@@ -9,7 +9,7 @@ use piston::{create_window, KeysState};
 
 use update::create_data::create_data;
 use update::update_data::update_data;
-use draw::{draw, load_image};
+use draw::{draw, load_image, load_glyphs};
 
 fn main() {
     let mut key_state = KeysState::new();
@@ -17,12 +17,13 @@ fn main() {
 
     let mut data = create_data(38, 27, 0.7);
     let images = load_image(&mut window);
+    let mut glyphs = load_glyphs(&mut window);
     while let Some(e) = window.next() {
         match e {
             Event::Loop(Loop::Render(_)) => {
-                window.draw_2d(&e, |c, g, _| {
+                window.draw_2d(&e, |c, g, d| {
                     clear([0.0, 0.0, 0.0, 1.0], g);
-                    draw(&images, &data, c, g);
+                    draw(&images, &mut glyphs, &data, c, g, d);
                 });
             }
             Event::Loop(Loop::Update(_)) => {

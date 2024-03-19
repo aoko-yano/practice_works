@@ -1,6 +1,7 @@
 use std::collections::HashMap;
 use piston_window::*;
-use crate::data::Data;
+use piston_window::types::Color;
+use crate::data::{Data, Position};
 use crate::data::planet::tile::environment::nature::AreaType;
 use crate::data::planet::tile::Tile;
 
@@ -50,13 +51,28 @@ pub fn load_image(window: &mut PistonWindow) -> HashMap<AreaType, Image> {
     map
 }
 
-pub fn draw(images: &HashMap<AreaType, Image>, data: &Data, c: Context, g: &mut G2d) {
+pub fn load_glyphs(window: &mut PistonWindow) -> Glyphs {
+    let assets = find_folder::Search::ParentsThenKids(3, 3)
+        .for_folder("assets")
+        .unwrap();
+    let ref font = assets.join("FiraSans-Regular.ttf");
+    window.load_font(font).unwrap()
+}
+
+pub fn draw(
+    images: &HashMap<AreaType, Image>,
+    glyphs: &mut Glyphs,
+    data: &Data,
+    c: Context,
+    g: &mut G2d,
+    d: &mut gfx_device_gl::Device) {
     let planet = data.history.last().unwrap();
     for (y, line) in planet.tiles.iter().enumerate() {
         for (x, tile) in line.iter().enumerate() {
             draw_tile(images, x, y, tile, c, g);
         }
     }
+    draw_text(glyphs, c, g, d);
 }
 
 fn draw_tile(images: &HashMap<AreaType, Image>, x: usize, y: usize, tile: &Tile, c: Context, g: &mut G2d) {
@@ -71,4 +87,23 @@ fn draw_tile(images: &HashMap<AreaType, Image>, x: usize, y: usize, tile: &Tile,
         )
         .scale(tile_image.scale, tile_image.scale);
     image(&tile_image.texture, transform, g);
+}
+
+fn draw_text(
+    glyphs: &mut Glyphs,
+    c: Context,
+    g: &mut G2d,
+    d: &mut gfx_device_gl::Device) {
+    let text_color: Color = [1.0, 1.0, 1.0, 1.0];
+    let pos = Position {x: 20, y: 540};
+    Text::new_color(text_color, 20)
+        .draw(
+            "hello world",
+            glyphs,
+            &c.draw_state,
+            c.transform.trans(pos.x as f64, pos.y as f64),
+            g,
+        )
+        .unwrap();
+    glyphs.factory.encoder.flush(d);
 }
