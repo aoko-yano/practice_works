@@ -8,9 +8,16 @@ pub fn mouse_click_event(
     data: &mut Data,
     mouse_button_state: &MouseButtonState,
     images: &HashMap<AreaType, Image>) {
+    data.text = format!("kick mouse click event for: {:?}", mouse_button_state);
+    tiles_click_event(data, mouse_button_state, images);
+}
+
+fn tiles_click_event(
+    data: &mut Data,
+    mouse_button_state: &MouseButtonState,
+    images: &HashMap<AreaType, Image>) {
     let tile_image = images.get(&AreaType::Desert).unwrap();
     let clicked_pos = get_clicked_tile(data, mouse_button_state, &tile_image);
-    data.text = format!("kick mouse click event for: {:?}", mouse_button_state);
     match clicked_pos {
         Some(p) => {
             data.text += &*format!("{:?}", p);
@@ -69,8 +76,8 @@ fn get_clicked_tile(
         let line = tiles.get(y).unwrap();
         for x in 0..line.len() {
             let pos = get_tile_position(x, y, tile_image_width, tile_image_height);
-            let relative_pos_x = cursor.x - pos.0 as i32;
-            let relative_pos_y = cursor.y - pos.1 as i32;
+            let relative_pos_x = ((cursor.x - pos.0 as i32) as f64 / tile_image.scale) as i32;
+            let relative_pos_y = ((cursor.y - pos.1 as i32) as f64 / tile_image.scale) as i32;
             if relative_pos_x < 0 {
                 continue;
             }

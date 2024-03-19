@@ -67,13 +67,21 @@ pub fn draw(
     c: Context,
     g: &mut G2d,
     d: &mut gfx_device_gl::Device) {
+    draw_tiles(images, &data, c, g);
+    draw_text(&data.text, glyphs, c, g, d);
+}
+
+fn draw_tiles(
+    images: &HashMap<AreaType, Image>,
+    data: &Data,
+    c: Context,
+    g: &mut G2d) {
     let planet = data.history.last().unwrap();
     for (y, line) in planet.tiles.iter().enumerate() {
         for (x, tile) in line.iter().enumerate() {
             draw_tile(images, x, y, tile, c, g);
         }
     }
-    draw_text(&data.text, glyphs, c, g, d);
 }
 
 fn draw_tile(
