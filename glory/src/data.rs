@@ -1,4 +1,5 @@
 use piston_window::MouseButton;
+use crate::data::planet::tile::Tile;
 
 pub mod planet;
 
@@ -27,4 +28,8 @@ pub struct MouseButtonState {
     pub cursor: Position,
     pub pressed: Option<MouseButton>,
     pub released: Option<MouseButton>,
+}
+
+pub enum Drawable {
+    TILE(Tile),
 }

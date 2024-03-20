@@ -10,7 +10,7 @@ use piston::{create_window};
 use update::create_data::create_data;
 use update::update_data::update_data;
 use draw::{draw, load_image, load_glyphs};
-use data::MouseButtonState;
+use data::{MouseButtonState, Drawable};
 
 fn main() {
     let mut window: PistonWindow = create_window();
@@ -23,6 +23,7 @@ fn main() {
         pressed: None,
         released: None
     };
+    let mut drawn_items = Vec::<Drawable>::new();
     while let Some(e) = window.next() {
         e.mouse_cursor(|p| {
             mouse_button_state.cursor = data::Position { x: p[0] as i32, y: p[1] as i32}
@@ -42,11 +43,12 @@ fn main() {
             Event::Loop(Loop::Render(_)) => {
                 window.draw_2d(&e, |c, g, d| {
                     clear([0.0, 0.0, 0.0, 1.0], g);
-                    draw(&images, &mut glyphs, &data, c, g, d);
+                    drawn_items.clear();
+                    draw(&images, &mut glyphs, &data, c, g, d, &mut drawn_items);
                 });
             },
             Event::Loop(Loop::Update(_)) => {
-                update_data(&mut data, &mut mouse_button_state, &images);
+                update_data(&mut data, &mut mouse_button_state, &images, &drawn_items);
             },
             _ => {}
         }

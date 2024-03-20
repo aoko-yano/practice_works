@@ -3,11 +3,10 @@ use piston_window::*;
 use piston_window::types::Color;
 use crate::data::{Data, Position};
 use crate::data::planet::tile::environment::nature::AreaType;
-use crate::data::planet::tile::Tile;
-use crate::calc::tile_position::get_tile_position;
+use crate::data::Drawable;
 
 pub struct Image {
-    texture: G2dTexture,
+    pub texture: G2dTexture,
     pub size: Size,
     pub scale: f64,
 }
@@ -66,8 +65,9 @@ pub fn draw(
     data: &Data,
     c: Context,
     g: &mut G2d,
-    d: &mut gfx_device_gl::Device) {
-    draw_tiles(images, &data, c, g);
+    d: &mut gfx_device_gl::Device,
+    drawn_items: &mut Vec<Drawable>) {
+    draw_tiles(images, &data, c, g, drawn_items);
     draw_text(&data.text, glyphs, c, g, d);
 }
 
@@ -75,34 +75,14 @@ fn draw_tiles(
     images: &HashMap<AreaType, Image>,
     data: &Data,
     c: Context,
-    g: &mut G2d) {
+    g: &mut G2d,
+    drawn_items: &mut Vec<Drawable>) {
     let planet = data.history.last().unwrap();
-    for (y, line) in planet.tiles.iter().enumerate() {
-        for (x, tile) in line.iter().enumerate() {
-            draw_tile(images, x, y, tile, c, g);
+    for (_y, line) in planet.tiles.iter().enumerate() {
+        for (_x, tile) in line.iter().enumerate() {
+            tile.draw(images, c, g, drawn_items);
         }
     }
-}
-
-fn draw_tile(
-    images: &HashMap<AreaType, Image>,
-    x: usize,
-    y: usize,
-    tile: &Tile,
-    c: Context,
-    g: &mut G2d) {
-    let tile_image = images.get(&tile.environment.nature.area_type).unwrap();
-    let image_width = tile_image.size.width * tile_image.scale;
-    let image_height = tile_image.size.height * tile_image.scale;
-    let tile_position = get_tile_position(x, y, image_width, image_height);
-    let transform = c
-        .transform
-        .trans(
-            tile_position.0,
-            tile_position.1,
-        )
-        .scale(tile_image.scale, tile_image.scale);
-    image(&tile_image.texture, transform, g);
 }
 
 fn draw_text(
