@@ -6,7 +6,7 @@ use piston_window::{Context, G2d, image, Transformed};
 
 use society::technology::Technology;
 
-use crate::data::{Drawable, Position};
+use crate::data::{Clickable, Position};
 use crate::calc::tile_position::get_tile_position;
 use crate::data::planet::tile::environment::nature::AreaType;
 use crate::draw::Image;
@@ -32,7 +32,7 @@ impl Tile {
         images: &HashMap<AreaType, Image>,
         c: Context,
         g: &mut G2d,
-        drawn_items: &mut Vec<Drawable>) {
+        drawn_clickable_items: &mut Vec<Clickable>) {
         let tile_image = images.get(&self.environment.nature.area_type).unwrap();
         let image_width = tile_image.size.width * tile_image.scale;
         let image_height = tile_image.size.height * tile_image.scale;
@@ -49,6 +49,6 @@ impl Tile {
             )
             .scale(tile_image.scale, tile_image.scale);
         image(&tile_image.texture, transform, g);
-        drawn_items.push(Drawable::TILE(self.clone()));
+        drawn_clickable_items.push(Clickable::TILE(self.clone()));
     }
 }

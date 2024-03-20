@@ -1,6 +1,6 @@
 use std::collections::HashMap;
 use crate::calc::tile_position::get_tile_position;
-use crate::data::{Data, Drawable, MouseButtonState};
+use crate::data::{Data, Clickable, MouseButtonState};
 use crate::data::planet::tile::environment::nature::AreaType;
 use crate::draw::Image;
 
@@ -8,13 +8,13 @@ pub fn mouse_click_event(
     data: &mut Data,
     mouse_button_state: &MouseButtonState,
     images: &HashMap<AreaType, Image>,
-    drawn_items: &Vec<Drawable>) {
+    drawn_items: &Vec<Clickable>) {
     data.text = format!("Clicked:{:?},{:?}", mouse_button_state.cursor, mouse_button_state.pressed);
     let clicked_item = get_clicked_item(mouse_button_state, images, drawn_items);
     match clicked_item {
         Some(item) => {
             match item {
-                Drawable::TILE(tile) => {
+                Clickable::TILE(tile) => {
                     data.text += &*format!("Tile:{:?}", tile.position);
                 }
             }
@@ -64,11 +64,11 @@ const TILE_FORM: [[bool; 32]; 32] = [
 fn get_clicked_item(
     mouse_button_state: &MouseButtonState,
     images: &HashMap<AreaType, Image>,
-    drawn_items: &Vec<Drawable>) -> Option<Drawable> {
+    drawn_clickable_items: &Vec<Clickable>) -> Option<Clickable> {
     let cursor = &mouse_button_state.cursor;
-    for item in drawn_items.iter().rev() {
+    for item in drawn_clickable_items.iter().rev() {
         match item {
-            Drawable::TILE(tile) => {
+            Clickable::TILE(tile) => {
                 let tile_image = images.get(&AreaType::Desert).unwrap();
                 let tile_image_width = tile_image.size.width * tile_image.scale;
                 let tile_image_height = tile_image.size.height * tile_image.scale;
@@ -92,7 +92,7 @@ fn get_clicked_item(
                     continue;
                 }
                 if TILE_FORM[relative_pos_y as usize][relative_pos_x as usize] {
-                    return Some(Drawable::TILE(tile.clone()))
+                    return Some(Clickable::TILE(tile.clone()))
                 }
             }
         }

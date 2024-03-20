@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use crate::data::{Data, Status, Position, Drawable};
+use crate::data::{Data, Status, Position, Clickable};
 use crate::data::planet::Planet;
 use crate::data::MouseButtonState;
 
@@ -16,11 +16,11 @@ pub fn update_data(
     data: &mut Data,
     mouse_button_state: &mut MouseButtonState,
     images: &HashMap<AreaType, Image>,
-    drawn_items: &Vec<Drawable>) {
+    drawn_clickable_items: &Vec<Clickable>) {
     match mouse_button_state.pressed {
         Some(_m) => {
             if mouse_button_state.pressed == mouse_button_state.released {
-                mouse_click_event(data, mouse_button_state, images, drawn_items);
+                mouse_click_event(data, mouse_button_state, images, drawn_clickable_items);
                 *mouse_button_state = MouseButtonState {
                     cursor: mouse_button_state.cursor.clone(),
                     pressed: None,

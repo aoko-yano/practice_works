@@ -3,7 +3,7 @@ use piston_window::*;
 use piston_window::types::Color;
 use crate::data::{Data, Position};
 use crate::data::planet::tile::environment::nature::AreaType;
-use crate::data::Drawable;
+use crate::data::Clickable;
 
 pub struct Image {
     pub texture: G2dTexture,
@@ -66,8 +66,8 @@ pub fn draw(
     c: Context,
     g: &mut G2d,
     d: &mut gfx_device_gl::Device,
-    drawn_items: &mut Vec<Drawable>) {
-    draw_tiles(images, &data, c, g, drawn_items);
+    drawn_clickable_items: &mut Vec<Clickable>) {
+    draw_tiles(images, &data, c, g, drawn_clickable_items);
     draw_text(&data.text, glyphs, c, g, d);
 }
 
@@ -76,11 +76,11 @@ fn draw_tiles(
     data: &Data,
     c: Context,
     g: &mut G2d,
-    drawn_items: &mut Vec<Drawable>) {
+    drawn_clickable_items: &mut Vec<Clickable>) {
     let planet = data.history.last().unwrap();
     for (_y, line) in planet.tiles.iter().enumerate() {
         for (_x, tile) in line.iter().enumerate() {
-            tile.draw(images, c, g, drawn_items);
+            tile.draw(images, c, g, drawn_clickable_items);
         }
     }
 }

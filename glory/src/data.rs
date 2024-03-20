@@ -30,6 +30,6 @@ pub struct MouseButtonState {
     pub released: Option<MouseButton>,
 }
 
-pub enum Drawable {
+pub enum Clickable {
     TILE(Tile),
 }
